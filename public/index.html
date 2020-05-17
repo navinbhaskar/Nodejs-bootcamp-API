@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DevCamper API</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        hljs.configure({
+            tabReplace: '    ',
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>body {
+    position: relative;
+}
+
+h1 {
+    margin-top: 5px;
+}
+
+h1, h2, h3, h4 {
+    color: #2b2b2b;
+}
+
+h2:after {
+    content: ' ';
+}
+
+h5 {
+    font-weight: bold;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    display: none;
+    position: absolute;
+    margin-left: 8px;
+}
+
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a {
+    color: #a5a5a5;
+    display: initial;
+}
+
+.nav.nav-tabs > li > a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.tab-content {
+    padding-top: 8px;
+}
+
+.table {
+    margin-bottom: 8px;
+}
+
+pre {
+    border-radius: 0px;
+    border: none;
+}
+
+pre code {
+    margin: -9.5px;
+}
+
+.request {
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
+.response-text-sample {
+    padding: 0px !important;
+}
+
+.response-text-sample pre {
+    margin-bottom: 0px;
+}
+
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #2b2b2b;
+    padding-top: 20px;
+}
+
+#sidebar-wrapper ul {
+    width: 250px;
+}
+
+#sidebar-wrapper ul li {
+    margin-right: 10px;
+}
+
+#sidebar-wrapper ul li a:hover {
+    background: inherit;
+    text-decoration: none;
+}
+
+#sidebar-wrapper ul li a {
+    display: block;
+    color: #ECF0F1;
+    padding: 6px 15px;
+}
+
+#sidebar-wrapper ul li ul {
+    padding-left: 25px;
+}
+
+#sidebar-wrapper ul li ul li a {
+    padding: 1px 0px;
+}
+
+#sidebar-wrapper ul li a:hover,
+#sidebar-wrapper ul li a:focus {
+    color: #e0c46c;
+    border-right: solid 1px #e0c46c;
+}
+
+#sidebar-wrapper ul li.active > a {
+    color: #e0c46c;
+    border-right: solid 3px #e0c46c;
+}
+
+#sidebar-wrapper ul li:not(.active) ul {
+    display: none;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px 15px 15px 250px;
+}
+</style>
+</head>
+<body data-spy="scroll" data-target=".scrollspy">
+<div id="sidebar-wrapper">
+    <div class="scrollspy">
+    <ul id="main-menu" data-spy="affix" class="nav">
+        <li>
+            <a href="#doc-general-notes">General notes</a>
+        </li>
+        
+        <li>
+            <a href="#doc-api-detail">API detail</a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="#folder-bootcamps">Bootcamps</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-bootcamps-get-all-bootcamps">get all bootcamps</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-get-single-bootcamp">get single bootcamp</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-create-new-bootcamps">create new bootcamps</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-update-bootcamp">update bootcamp</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-delete-bootcamp">delete bootcamp</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-url-api-v1-bootcamps-radius-02118-10">{{URL}}/api/v1/bootcamps/radius/02118/10</a>
+                </li>
+                
+                <li>
+                    <a href="#request-bootcamps-upload-photo">upload photo</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-courses">Courses</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-courses-get-all-courses">get all courses</a>
+                </li>
+                
+                <li>
+                    <a href="#request-courses-get-courses-for-bootcamps">get courses for bootcamps</a>
+                </li>
+                
+                <li>
+                    <a href="#request-courses-get-single-course">get single course</a>
+                </li>
+                
+                <li>
+                    <a href="#request-courses-create-bootcamp-course">create bootcamp course</a>
+                </li>
+                
+                <li>
+                    <a href="#request-courses-delete-course">delete course</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-authentication">Authentication</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-authentication-register-user">Register user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-get-logged-in-user">Get logged in user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-login-user">Login user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-forgot-password">forgot password</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-reset-password">reset password</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-update-user-details">update user details</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-update-password">update password</a>
+                </li>
+                
+                <li>
+                    <a href="#request-authentication-logout">Logout</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-users">Users</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-users-get-all-users">Get all users</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-get-single-user">Get single user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-create-user">Create user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-update-user">Update user</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-delete-user">delete user</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-reviews">Reviews</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-reviews-get-all-reviews">get all reviews</a>
+                </li>
+                
+                <li>
+                    <a href="#request-reviews-get-single-review">Get single  review</a>
+                </li>
+                
+                <li>
+                    <a href="#request-reviews-get-reviews-of-a-bootcamp">Get reviews of a bootcamp</a>
+                </li>
+                
+                <li>
+                    <a href="#request-reviews-add-review-for-bootcamp">Add review for bootcamp</a>
+                </li>
+                
+                <li>
+                    <a href="#request-reviews-delete-review">Delete review</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+    </ul>
+</div>
+
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>DevCamper API</h1>
+
+                <h2 id="doc-general-notes">
+                    General notes
+                    <a href="#doc-general-notes"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+                <p>Backend API for DevCamper Application</p>
+
+
+                
+
+                <h2 id="doc-api-detail">
+                    API detail
+                    <a href="#doc-api-detail"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+                
+
+
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-bootcamps">
+                        Bootcamps
+                        <a href="#folder-bootcamps"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>Bootcamps CRUD funcationality</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-get-all-bootcamps">
+                            get all bootcamps
+                            <a href="#request-bootcamps-get-all-bootcamps"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>fetch all bootcamps</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-get-all-bootcamps-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-get-all-bootcamps-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-get-all-bootcamps-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/bootcamps"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-get-all-bootcamps-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/bootcamps HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-get-single-bootcamp">
+                            get single bootcamp
+                            <a href="#request-bootcamps-get-single-bootcamp"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get single bootcamp by ID</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-get-single-bootcamp-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-get-single-bootcamp-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-get-single-bootcamp-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6Im5hdmluIiwiZW1haWwiOiJuYXZpbmJoYXNrYXJpaXRrZ3BAZ21haWwuY29tIn0sImlhdCI6MTU4OTI4NTI4NiwiZXhwIjoxNTg5Mjg1MzE2fQ.dg7yHuoe-2dJ4BYJloucvqFE4hw-hWzBNwN-uajNjCg" "{{URL}}/api/v1/bootcamps/5ebc592f63dab42a848aa87an,,nlkknlk"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-get-single-bootcamp-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/bootcamps/5ebc592f63dab42a848aa87an,,nlkknlk HTTP/1.1
+Host: 
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6Im5hdmluIiwiZW1haWwiOiJuYXZpbmJoYXNrYXJpaXRrZ3BAZ21haWwuY29tIn0sImlhdCI6MTU4OTI4NTI4NiwiZXhwIjoxNTg5Mjg1MzE2fQ.dg7yHuoe-2dJ4BYJloucvqFE4hw-hWzBNwN-uajNjCg</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                
+                                <li role="presentation" class="active">
+                                    <a href="#request-bootcamps-get-single-bootcamp-responses-54386524-e68e-469e-b9ce-ad69766e9a00" data-toggle="tab">
+                                        
+                                            Response
+                                        
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                            <div class="tab-content">
+                                
+                                <div class="tab-pane active" id="request-bootcamps-get-single-bootcamp-responses-54386524-e68e-469e-b9ce-ad69766e9a00">
+                                    <table class="table table-bordered">
+                                        <tr><th style="width: 20%;">Status</th><td>404 Not Found</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">X-Powered-By</th><td>Express</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">Content-Length</th><td>92</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">ETag</th><td>W/"5c-EOmDctcMw4l6ymMQlH9Fqd5OLCc"</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">Date</th><td>Thu, 14 May 2020 11:18:57 GMT</td></tr>
+                                        
+                                        <tr><th style="width: 20%;">Connection</th><td>keep-alive</td></tr>
+                                        
+                                        
+                                            
+                                            <tr><td class="response-text-sample" colspan="2">
+                                                <pre><code>{
+    "success": false,
+    "error": "Bootcamp not found with id of 5ebc592f63dab42a848aa87an,,nlkknlk"
+}</code></pre>
+                                            </td></tr>
+                                            
+                                        
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-create-new-bootcamps">
+                            create new bootcamps
+                            <a href="#request-bootcamps-create-new-bootcamps"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>create new bootcamps</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-create-new-bootcamps-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-create-new-bootcamps-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-create-new-bootcamps-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+		"name": "Test Bootcamp",
+		"description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer",
+		"website": "https://devworks.com",
+		"phone": "(111) 111-1111",
+		"email": "enroll@devworks.com",
+		"address": "233 Bay State Rd Boston MA 02215",
+		"careers": ["Web Development", "UI/UX", "Business"],
+		"housing": true,
+		"jobAssistance": true,
+		"jobGuarantee": false,
+		"acceptGi": true
+}' "{{URL}}/api/v1/bootcamps"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-create-new-bootcamps-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/bootcamps HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+		"name": "Test Bootcamp",
+		"description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer",
+		"website": "https://devworks.com",
+		"phone": "(111) 111-1111",
+		"email": "enroll@devworks.com",
+		"address": "233 Bay State Rd Boston MA 02215",
+		"careers": ["Web Development", "UI/UX", "Business"],
+		"housing": true,
+		"jobAssistance": true,
+		"jobGuarantee": false,
+		"acceptGi": true
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-update-bootcamp">
+                            update bootcamp
+                            <a href="#request-bootcamps-update-bootcamp"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>update bootcamp</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-update-bootcamp-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-update-bootcamp-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-update-bootcamp-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"housing": false
+}' "{{URL}}/api/v1/bootcamps/5ebc592f63dab42a848aa87a"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-update-bootcamp-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/bootcamps/5ebc592f63dab42a848aa87a HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"housing": false
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-delete-bootcamp">
+                            delete bootcamp
+                            <a href="#request-bootcamps-delete-bootcamp"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>delete bootcamp</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-delete-bootcamp-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-delete-bootcamp-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-delete-bootcamp-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "{{URL}}/api/v1/bootcamps/5d725a037b292f5f8ceff787"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-delete-bootcamp-example-http">
+                                    <pre><code class="hljs http">DELETE %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a037b292f5f8ceff787 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-url-api-v1-bootcamps-radius-02118-10">
+                            {{URL}}/api/v1/bootcamps/radius/02118/10
+                            <a href="#request-bootcamps-url-api-v1-bootcamps-radius-02118-10"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-url-api-v1-bootcamps-radius-02118-10-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-url-api-v1-bootcamps-radius-02118-10-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-url-api-v1-bootcamps-radius-02118-10-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/bootcamps/radius/02118/10"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-url-api-v1-bootcamps-radius-02118-10-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/bootcamps/radius/02118/10 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-bootcamps-upload-photo">
+                            upload photo
+                            <a href="#request-bootcamps-upload-photo"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>upload photo</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-bootcamps-upload-photo-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-bootcamps-upload-photo-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-bootcamps-upload-photo-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"housing": false
+}' "{{URL}}/api/v1/bootcamps/5d725a037b292f5f8ceff787/photo"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-bootcamps-upload-photo-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a037b292f5f8ceff787/photo HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"housing": false
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-courses">
+                        Courses
+                        <a href="#folder-courses"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>CRUD courses</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-courses-get-all-courses">
+                            get all courses
+                            <a href="#request-courses-get-all-courses"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get all courses</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-courses-get-all-courses-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-courses-get-all-courses-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-courses-get-all-courses-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/courses"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-courses-get-all-courses-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/courses HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-courses-get-courses-for-bootcamps">
+                            get courses for bootcamps
+                            <a href="#request-courses-get-courses-for-bootcamps"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get courses for bootcamps</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-courses-get-courses-for-bootcamps-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-courses-get-courses-for-bootcamps-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-courses-get-courses-for-bootcamps-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/bootcamps/5d725a037b292f5f8ceff787/courses"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-courses-get-courses-for-bootcamps-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a037b292f5f8ceff787/courses HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-courses-get-single-course">
+                            get single course
+                            <a href="#request-courses-get-single-course"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get single course</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-courses-get-single-course-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-courses-get-single-course-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-courses-get-single-course-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/courses/5d725a4a7b292f5f8ceff789"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-courses-get-single-course-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/courses/5d725a4a7b292f5f8ceff789 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-courses-create-bootcamp-course">
+                            create bootcamp course
+                            <a href="#request-courses-create-bootcamp-course"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>create bootcamp course</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-courses-create-bootcamp-course-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-courses-create-bootcamp-course-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-courses-create-bootcamp-course-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"title": "Front End Web Development",
+	"description": "This course will provide you with all of the essentials to become a successful frontend web developer. You will learn to master HTML, CSS and front end JavaScript, along with tools like Git, VSCode and front end frameworks like Vue",
+	"weeks": 8,
+	"tuition": 8000,
+	"minimumSkill": "beginner",
+	"scholarhipsAvailable": true
+}' "{{URL}}/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/courses"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-courses-create-bootcamp-course-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/courses HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"title": "Front End Web Development",
+	"description": "This course will provide you with all of the essentials to become a successful frontend web developer. You will learn to master HTML, CSS and front end JavaScript, along with tools like Git, VSCode and front end frameworks like Vue",
+	"weeks": 8,
+	"tuition": 8000,
+	"minimumSkill": "beginner",
+	"scholarhipsAvailable": true
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-courses-delete-course">
+                            delete course
+                            <a href="#request-courses-delete-course"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>delete course</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-courses-delete-course-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-courses-delete-course-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-courses-delete-course-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "{{URL}}/api/v1/courses/5d725cb9c4ded7bcb480eaa1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-courses-delete-course-example-http">
+                                    <pre><code class="hljs http">DELETE %7B%7BURL%7D%7D/api/v1/courses/5d725cb9c4ded7bcb480eaa1 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-authentication">
+                        Authentication
+                        <a href="#folder-authentication"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>User authentication</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-register-user">
+                            Register user
+                            <a href="#request-authentication-register-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Register user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-register-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-register-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-register-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"name": "navin bhaskar",
+	"email": "navinbhaskar@gmail.com",
+	"password": "123456",
+	"role": "publisher"
+}' "{{URL}}/api/v1/auth/register"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-register-user-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/auth/register HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"name": "navin bhaskar",
+	"email": "navinbhaskar@gmail.com",
+	"password": "123456",
+	"role": "publisher"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-get-logged-in-user">
+                            Get logged in user
+                            <a href="#request-authentication-get-logged-in-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get logged in user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-get-logged-in-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-get-logged-in-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-get-logged-in-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYmViMDY2M2QxZTRkMmQ1MGYwZGVjZCIsImlhdCI6MTU4OTU2MjU3OSwiZXhwIjoxNTkyMTU0NTc5fQ.hcuPD2o4QCbpjsHJwPWHdp950FryKCa90zd9u3eJhOE" "{{URL}}/api/v1/auth/me"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-get-logged-in-user-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/auth/me HTTP/1.1
+Host: 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYmViMDY2M2QxZTRkMmQ1MGYwZGVjZCIsImlhdCI6MTU4OTU2MjU3OSwiZXhwIjoxNTkyMTU0NTc5fQ.hcuPD2o4QCbpjsHJwPWHdp950FryKCa90zd9u3eJhOE</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-login-user">
+                            Login user
+                            <a href="#request-authentication-login-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Login user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-login-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-login-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-login-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"email": "john@gmail.com",
+	"password": "123456"
+}' "{{URL}}/api/v1/auth/login"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-login-user-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/auth/login HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"email": "john@gmail.com",
+	"password": "123456"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-forgot-password">
+                            forgot password
+                            <a href="#request-authentication-forgot-password"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>forgot password</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-forgot-password-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-forgot-password-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-forgot-password-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"email": "john@gmail.com"
+}' "{{URL}}/api/v1/auth/forgotpassword"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-forgot-password-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/auth/forgotpassword HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"email": "john@gmail.com"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-reset-password">
+                            reset password
+                            <a href="#request-authentication-reset-password"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>reset password</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-reset-password-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-reset-password-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-reset-password-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"password": "1234567"
+}' "{{URL}}/api/v1/auth/resetpassword/b4d58c4ebce385bb34ef9ab26e2c23dbf94e66ef"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-reset-password-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/auth/resetpassword/b4d58c4ebce385bb34ef9ab26e2c23dbf94e66ef HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"password": "1234567"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-update-user-details">
+                            update user details
+                            <a href="#request-authentication-update-user-details"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>update user details</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-update-user-details-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-update-user-details-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-update-user-details-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"email": "john@gmail.com",
+	"name": "John Doe"
+}' "{{URL}}/api/v1/auth/updatedetails"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-update-user-details-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/auth/updatedetails HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"email": "john@gmail.com",
+	"name": "John Doe"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-update-password">
+                            update password
+                            <a href="#request-authentication-update-password"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>update password</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-update-password-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-update-password-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-update-password-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"currentPassword": "1234567",
+	"newPassword": "123456"
+}' "{{URL}}/api/v1/auth/updatepassword"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-update-password-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/auth/updatepassword HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"currentPassword": "1234567",
+	"newPassword": "123456"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-authentication-logout">
+                            Logout
+                            <a href="#request-authentication-logout"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Logout</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-authentication-logout-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-authentication-logout-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-authentication-logout-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/auth/logout"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-authentication-logout-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/auth/logout HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-users">
+                        Users
+                        <a href="#folder-users"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>CRUD for users (Admin)</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-get-all-users">
+                            Get all users
+                            <a href="#request-users-get-all-users"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get all users</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-get-all-users-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-get-all-users-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-get-all-users-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/users"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-get-all-users-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/users HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-get-single-user">
+                            Get single user
+                            <a href="#request-users-get-single-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get single user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-get-single-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-get-single-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-get-single-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/users/5d7a514b5d2c12c7449be045"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-get-single-user-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/users/5d7a514b5d2c12c7449be045 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-create-user">
+                            Create user
+                            <a href="#request-users-create-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>create user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-create-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-create-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-create-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"name": "navin bhaskar",
+	"email": "navinbhaskar@gmail.com",
+	"password": "123456"
+}' "{{URL}}/api/v1/users"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-create-user-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/users HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"name": "navin bhaskar",
+	"email": "navinbhaskar@gmail.com",
+	"password": "123456"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-update-user">
+                            Update user
+                            <a href="#request-users-update-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>update user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-update-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-update-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-update-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"name": "navin bhaskar"
+}' "{{URL}}/api/v1/users/5ec0074cda79d85354230cea"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-update-user-example-http">
+                                    <pre><code class="hljs http">PUT %7B%7BURL%7D%7D/api/v1/users/5ec0074cda79d85354230cea HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"name": "navin bhaskar"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-delete-user">
+                            delete user
+                            <a href="#request-users-delete-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>delete user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-delete-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-delete-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-delete-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/json" "{{URL}}/api/v1/users/5ec0074cda79d85354230cea"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-delete-user-example-http">
+                                    <pre><code class="hljs http">DELETE %7B%7BURL%7D%7D/api/v1/users/5ec0074cda79d85354230cea HTTP/1.1
+Host: 
+Content-Type: application/json</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-reviews">
+                        Reviews
+                        <a href="#folder-reviews"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>Course reviews</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-reviews-get-all-reviews">
+                            get all reviews
+                            <a href="#request-reviews-get-all-reviews"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get all reviews</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-reviews-get-all-reviews-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-reviews-get-all-reviews-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-reviews-get-all-reviews-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/reviews"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-reviews-get-all-reviews-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/reviews HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-reviews-get-single-review">
+                            Get single  review
+                            <a href="#request-reviews-get-single-review"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get single  review</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-reviews-get-single-review-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-reviews-get-single-review-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-reviews-get-single-review-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/reviews/5d7a514b5d2c12c7449be024"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-reviews-get-single-review-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/reviews/5d7a514b5d2c12c7449be024 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-reviews-get-reviews-of-a-bootcamp">
+                            Get reviews of a bootcamp
+                            <a href="#request-reviews-get-reviews-of-a-bootcamp"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>get reviews of a bootcamp</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-reviews-get-reviews-of-a-bootcamp-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-reviews-get-reviews-of-a-bootcamp-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-reviews-get-reviews-of-a-bootcamp-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "{{URL}}/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/reviews"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-reviews-get-reviews-of-a-bootcamp-example-http">
+                                    <pre><code class="hljs http">GET %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/reviews HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-reviews-add-review-for-bootcamp">
+                            Add review for bootcamp
+                            <a href="#request-reviews-add-review-for-bootcamp"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Add review for bootcamp</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-reviews-add-review-for-bootcamp-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-reviews-add-review-for-bootcamp-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-reviews-add-review-for-bootcamp-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"title": "Nice Bootcamp",
+	"text": "I learned a lot",
+	"rating": 8
+}' "{{URL}}/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/reviews"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-reviews-add-review-for-bootcamp-example-http">
+                                    <pre><code class="hljs http">POST %7B%7BURL%7D%7D/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/reviews HTTP/1.1
+Host: 
+Content-Type: application/json
+
+{
+	"title": "Nice Bootcamp",
+	"text": "I learned a lot",
+	"rating": 8
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-reviews-delete-review">
+                            Delete review
+                            <a href="#request-reviews-delete-review"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete review</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-reviews-delete-review-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-reviews-delete-review-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-reviews-delete-review-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "{{URL}}/api/v1/reviews/5ec0ddea0efca92ca05cd992"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-reviews-delete-review-example-http">
+                                    <pre><code class="hljs http">DELETE %7B%7BURL%7D%7D/api/v1/reviews/5ec0ddea0efca92ca05cd992 HTTP/1.1
+Host: </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("table:not(.table)").addClass('table table-bordered');
+    });
+</script>
+</body>
+</html>
